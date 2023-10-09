@@ -19,6 +19,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// print the request body for every request that hits the system.
+// app.use((req, res, next) => {
+//  req.body.userid = 1234567;
+//  console.log("The request body has: ", req.body)
+
+//  next();
+// });
+
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 
