@@ -55,7 +55,7 @@ router.get('/:id', (req, res) => {
 
 // POST: create a new pet
 router.post('/', (req, res) => {
-
+    
     var pet = {
         id: crypto.randomUUID(),
         name: req.body.name,
@@ -71,14 +71,42 @@ router.post('/', (req, res) => {
 
 // PUT: update an existing pet
 router.put('/:id', (req, res) => {
+    let itemPos = pets.findIndex((elem) => {
+        return elem.id == req.params.id;
+    });
 
+    if(itemPos == -1) {
+        res.status(404);
+        res.json(pets);
+    }
+
+    // validate my data
+    if (req.body.name = undefined) {
+        res.status(400);
+        res.json(pets[itemPos]);
+    }
+
+    pets[itemPos] = {
+        // edit the item
+        id: pets[itemPos].id,
+        name: req.body.name,
+        breed: req.body.breed,
+        notes: req.body.notes
+    }
+
+    res.status(200);
+    res.json(pets[itemPos]);
 });
 
 // DELETE: delete a pet
 router.delete('/:id', (req, res) => {
+    // splice
+
+    pets.splice(index,1);
+
     pets = pets.filter((elem) => {
         return elem.id != req.params.id;
-    })
+    });
 
     res.status(200); // this is wrong
     res.json(pets);
